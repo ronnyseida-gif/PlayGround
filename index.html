@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6eee7">
+  <title>Ronny's Glow Up Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Glow Up Studio home"><span class="brand-mark">✦</span><span>glow up <b>studio</b></span></a>
+      <div class="top-note"><span class="live-dot"></span> YOUR PERSONAL BEAUTY PLAYGROUND</div>
+      <button class="icon-button" id="resetButton" aria-label="Reset makeover" title="Start over">↺</button>
+    </header>
+
+    <section class="workspace">
+      <aside class="editor-panel">
+        <div class="intro">
+          <span class="eyebrow">THE MAIN CHARACTER EDITION</span>
+          <h1>Ronny's<br><em>glow up</em></h1>
+          <p>New hair, fresh color, all your rules. Make a look that feels <i>so you.</i></p>
+        </div>
+
+        <div class="step-heading">
+          <div class="step-number">01</div>
+          <div><h2>Pick a hairstyle</h2><span>Start with a signature cut</span></div>
+        </div>
+        <div class="style-grid" id="styleGrid" role="group" aria-label="Hairstyles">
+          <button class="style-card selected" data-style="textured" aria-pressed="true"><span class="style-art art-textured">〰</span><span>Textured</span></button>
+          <button class="style-card" data-style="curtain" aria-pressed="false"><span class="style-art art-curtain">⌁</span><span>Curtain</span></button>
+          <button class="style-card" data-style="waves" aria-pressed="false"><span class="style-art art-waves">≈</span><span>Soft waves</span></button>
+          <button class="style-card" data-style="fluffy" aria-pressed="false"><span class="style-art art-fluffy">✿</span><span>Fluffy</span></button>
+        </div>
+        <div class="hair-color-row">
+          <span>Hair color</span>
+          <div class="swatches" id="hairSwatches" role="group" aria-label="Hair color">
+            <button class="swatch selected" style="--swatch:#31221e" data-color="#31221e" aria-label="Espresso" aria-pressed="true"></button>
+            <button class="swatch" style="--swatch:#694032" data-color="#694032" aria-label="Chestnut" aria-pressed="false"></button>
+            <button class="swatch" style="--swatch:#b8794e" data-color="#b8794e" aria-label="Copper" aria-pressed="false"></button>
+            <button class="swatch" style="--swatch:#d4ad72" data-color="#d4ad72" aria-label="Honey" aria-pressed="false"></button>
+            <button class="swatch" style="--swatch:#b78096" data-color="#b78096" aria-label="Rose" aria-pressed="false"></button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="step-heading makeup-heading">
+          <div class="step-number">02</div>
+          <div><h2>Make it glow</h2><span>A little color goes a long way</span></div>
+        </div>
+        <div class="makeup-options">
+          <label class="makeup-choice"><span class="makeup-icon blush-icon">◉</span><span><b>Blush</b><small>Rosy cheeks</small></span><input id="blushToggle" type="checkbox" checked><span class="toggle"></span></label>
+          <label class="makeup-choice"><span class="makeup-icon eye-icon">✧</span><span><b>Eye shimmer</b><small>A little extra sparkle</small></span><input id="eyeToggle" type="checkbox"><span class="toggle"></span></label>
+          <label class="makeup-choice"><span class="makeup-icon lip-icon">♥</span><span><b>Lip gloss</b><small>Your finishing touch</small></span><input id="lipToggle" type="checkbox" checked><span class="toggle"></span></label>
+        </div>
+        <div class="tone-row"><span>Makeup tone</span><div class="swatches" id="makeupSwatches" role="group" aria-label="Makeup tone">
+          <button class="swatch selected" style="--swatch:#e98692" data-color="#e98692" aria-label="Rose pink" aria-pressed="true"></button>
+          <button class="swatch" style="--swatch:#d78c59" data-color="#d78c59" aria-label="Peach" aria-pressed="false"></button>
+          <button class="swatch" style="--swatch:#c185a2" data-color="#c185a2" aria-label="Mauve" aria-pressed="false"></button>
+          <button class="swatch" style="--swatch:#df6265" data-color="#df6265" aria-label="Cherry" aria-pressed="false"></button>
+        </div></div>
+        <button class="finish-button" id="finishButton"><span>✦</span> Finish my look <span class="button-arrow">→</span></button>
+        <p class="panel-footnote">A little self-expression looks good on everyone.</p>
+      </aside>
+
+      <section class="stage-panel" aria-label="Makeover preview">
+        <div class="stage-topline"><span class="look-label"><span class="sparkle">✦</span> YOUR LOOK, YOUR WAY</span><span class="look-count" id="lookCount">LOOK 01</span></div>
+        <div class="photo-stage" id="photoStage">
+          <div class="photo-wrap">
+            <img class="portrait" src="public/ronny.jpg" alt="Ronny's portrait ready for a creative makeover">
+            <svg class="overlays" viewBox="0 420 1080 1406" preserveAspectRatio="none" aria-hidden="true">
+              <g id="hairOverlay" class="hair textured">
+                <path class="hair-fill" d="M91 785 C76 674 95 501 192 397 C275 306 422 320 511 341 C658 295 814 393 863 512 C903 608 898 713 871 797 C844 734 822 683 790 646 C774 711 756 748 731 771 C741 703 725 655 705 625 C689 703 667 737 632 760 C648 690 631 648 616 626 C592 694 564 725 527 749 C536 686 529 649 510 617 C489 689 461 725 425 749 C434 681 419 641 404 617 C384 686 349 721 317 747 C325 678 307 637 291 615 C272 682 247 724 215 749 C217 681 196 646 178 627 C161 686 141 741 121 797 Z"/>
+                <path class="hair-glint" d="M191 505 C292 363 434 371 487 380 M548 376 C670 351 794 447 824 543 M143 580 C136 676 151 719 165 746 M777 526 C810 591 817 652 805 699"/>
+                <path class="curtain-fringe" d="M269 536 C333 580 374 624 385 713 C340 670 304 631 286 584 M481 435 C474 537 463 620 433 714 C414 619 417 527 434 448 M605 440 C624 540 636 620 626 706 C590 630 571 534 570 438"/>
+                <g class="curl-dots"><circle cx="188" cy="470" r="39"/><circle cx="242" cy="401" r="41"/><circle cx="317" cy="359" r="43"/><circle cx="394" cy="354" r="38"/><circle cx="671" cy="369" r="43"/><circle cx="749" cy="422" r="42"/><circle cx="817" cy="493" r="38"/></g>
+                <path class="long-strands" d="M127 696 C88 885 111 1067 183 1220 C156 1018 198 879 220 790 M843 682 C908 882 889 1067 820 1215 C842 1024 798 876 775 789"/>
+              </g>
+              <g id="makeupOverlay" class="eyes-off">
+                <ellipse id="blushLeft" cx="317" cy="1171" rx="99" ry="47"/>
+                <ellipse id="blushRight" cx="749" cy="1167" rx="99" ry="47"/>
+                <path id="eyeLeft" d="M256 1046 Q332 997 407 1040 Q338 1074 256 1046Z"/>
+                <path id="eyeRight" d="M589 1040 Q670 992 747 1031 Q672 1066 589 1040Z"/>
+                <path id="lipShape" d="M428 1354 Q467 1325 511 1347 Q548 1321 590 1350 Q567 1401 510 1405 Q455 1402 428 1354Z"/>
+                <path class="lip-shine" d="M477 1356 Q510 1340 542 1355"/>
+              </g>
+              <g class="accessory" id="accessoryOverlay"><path d="M135 943 Q112 1065 174 1111 Q203 1127 226 1099"/><path d="M827 939 Q849 1063 789 1110 Q760 1128 738 1098"/><circle cx="189" cy="1114" r="23"/><circle cx="774" cy="1114" r="23"/></g>
+            </svg>
+          </div>
+          <div class="photo-badge"><span>✧</span> MAIN CHARACTER ENERGY</div>
+          <div class="photo-caption"><span>THE GLOW-UP</span><b>is in the details.</b></div>
+          <div class="confetti" id="confetti" aria-hidden="true"></div>
+        </div>
+        <div class="stage-footer"><div class="footer-tip"><span class="tip-icon">✿</span><span><b>Beauty tip</b><small id="beautyTip">A touch of blush brings the whole look to life.</small></span></div><button class="share-button" id="snapshotButton"><span>↗</span> Save look</button></div>
+      </section>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
