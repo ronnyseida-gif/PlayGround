@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#101a20">
+<link rel="icon" href="data:,">
+<title>Ronny Seida: Last Round</title>
+<style>
+:root{color-scheme:dark;--ink:#f4f1e8;--muted:#a9b5b4;--lime:#d8f36a;--coral:#ff735f;--panel:#17262c}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101a20;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;touch-action:none}
+body{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 35%,#263941 0,#101a20 72%)}
+.game-shell{width:min(100vw,1120px);padding:clamp(10px,2.4vw,25px);display:flex;flex-direction:column;gap:12px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}.brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.08em;font-size:clamp(13px,2vw,17px)}.brand-mark{width:30px;height:30px;border-radius:9px;background:var(--lime);color:#152126;display:grid;place-items:center;font-size:18px;transform:rotate(-5deg)}.round-label{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}.arena-frame{position:relative;width:100%;aspect-ratio:16/9;min-height:260px;max-height:calc(100dvh - 150px);border:1px solid #53666a;border-radius:18px;overflow:hidden;background:#203238;box-shadow:0 25px 90px #0008,0 0 0 5px #17262c;isolation:isolate}canvas{display:block;width:100%;height:100%;touch-action:none}.hud{position:absolute;inset:0;pointer-events:none;padding:clamp(12px,2.2vw,24px);display:flex;flex-direction:column;justify-content:space-between}.hud-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.fighter{width:min(35%,300px)}.fighter.right{text-align:right}.name-row{font-size:clamp(10px,1.3vw,13px);letter-spacing:.13em;text-transform:uppercase;font-weight:900;margin-bottom:7px;display:flex;justify-content:space-between;gap:8px}.fighter.right .name-row{flex-direction:row-reverse}.health{height:11px;border:1px solid #f4f1e855;background:#111b20bb;border-radius:99px;padding:2px;overflow:hidden}.health>i{height:100%;display:block;border-radius:99px;background:linear-gradient(90deg,#c1e650,#e8fb91);transition:width .18s}.fighter.right .health>i{margin-left:auto;background:linear-gradient(90deg,#ff9b72,#ff5e65)}.hud-meta{text-align:center;color:#e9e7d8;font-size:10px;letter-spacing:.2em;font-weight:900;text-shadow:0 2px 6px #000;white-space:nowrap}.bottom-hud{display:flex;align-items:end;justify-content:space-between}.hint{font-size:clamp(9px,1vw,11px);font-weight:800;letter-spacing:.1em;color:#e8e5d7;background:#101a20a6;border:1px solid #ffffff24;border-radius:8px;padding:8px 11px}.combo{font-size:11px;font-weight:900;color:var(--lime);text-shadow:0 2px 8px #000;opacity:0;transition:opacity .2s}.combo.on{opacity:1}.footer{display:flex;justify-content:space-between;align-items:center;color:#aab7b4;font-size:11px;letter-spacing:.06em}.footer b{color:#e5e9d8}.overlay{position:absolute;inset:0;display:grid;place-items:center;padding:12px;background:linear-gradient(90deg,#122025ed,#122025d9);z-index:3;transition:opacity .22s}.overlay.hidden{opacity:0;pointer-events:none}.card{width:min(450px,96%);text-align:center;padding:clamp(20px,4vw,38px);border:1px solid #e4f1bd45;border-radius:18px;background:#17262cf2;box-shadow:0 18px 60px #0008}.eyebrow{font-size:10px;letter-spacing:.25em;font-weight:950;color:var(--lime);text-transform:uppercase}.card h1{font-size:clamp(28px,5vw,47px);line-height:.96;letter-spacing:-.06em;margin:12px 0 10px}.card h1 em{font-style:normal;color:var(--lime)}.card p{color:#c3ceca;line-height:1.55;font-size:clamp(12px,1.5vw,14px);margin:0 auto 20px;max-width:330px}.keyline{font-size:10px;color:#99aaa8;line-height:1.7;margin-bottom:18px}.keyline b{color:#eff1e3}.primary{border:0;border-radius:10px;background:var(--lime);color:#172126;padding:13px 25px;font:900 12px ui-rounded,"Trebuchet MS",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 0 #92ac38;transition:transform .1s,box-shadow .1s}.primary:active{transform:translateY(3px);box-shadow:0 1px 0 #92ac38}.mobile-controls{display:none;position:absolute;inset:auto 0 10px;justify-content:space-between;align-items:end;padding:0 14px;z-index:2;pointer-events:none}.pad,.action-buttons{display:flex;gap:7px;pointer-events:auto}.pad{display:grid;grid-template-columns:repeat(3,43px);grid-template-rows:repeat(2,38px);grid-template-areas:". up ." "left down right"}.touch-btn{border:1px solid #ffffff45;border-radius:12px;background:#101a20bf;color:white;font-size:16px;font-weight:900;touch-action:none;user-select:none;display:grid;place-items:center;min-width:43px;min-height:38px}.touch-btn.active{background:#d8f36acc;color:#162126}.touch-btn.up{grid-area:up}.touch-btn.down{grid-area:down}.touch-btn.left{grid-area:left}.touch-btn.right{grid-area:right}.action-buttons .touch-btn{width:53px;height:53px;border-radius:50%;font-size:10px;letter-spacing:.04em}.touch-btn.punch{background:#d8f36a;color:#182127;border-color:#fff8}.touch-btn.dodge{background:#ff735f;color:white}
+@media(max-width:680px){.game-shell{padding:9px;gap:8px}.arena-frame{aspect-ratio:4/3;min-height:0;max-height:none;border-radius:13px}.footer{font-size:9px}.mobile-controls{display:flex}.hint{display:none}.hud{padding:10px}.health{height:9px}.hud-meta{font-size:8px}.fighter{width:36%}.bottom-hud{padding-bottom:112px}.card{padding:14px}.card h1{font-size:29px;margin:8px 0 7px}.card p{margin-bottom:10px;font-size:12px}.keyline{font-size:9px;margin-bottom:10px}.primary{padding:11px 18px}.topbar{min-height:30px}.brand-mark{width:26px;height:26px}.round-label{font-size:9px}}
+@media(max-height:500px) and (min-width:681px){.game-shell{padding:8px;gap:6px}.arena-frame{max-height:calc(100dvh - 84px)}.topbar{min-height:30px}.footer{font-size:9px}}
+</style>
+</head>
+<body>
+<main class="game-shell">
+  <header class="topbar"><div class="brand"><span class="brand-mark">R</span><span>RONNY SEIDA <span style="color:#91a19e">/</span> LAST ROUND</span></div><div class="round-label">ONE FIGHT. ONE SHOT.</div></header>
+  <section class="arena-frame" aria-label="Ronny Seida versus Lauin game arena">
+    <canvas id="game" aria-label="Game arena"></canvas>
+    <div class="hud">
+      <div class="hud-top">
+        <div class="fighter"><div class="name-row"><span>RONNY SEIDA</span><span id="player-value">100</span></div><div class="health"><i id="player-bar" style="width:100%"></i></div></div>
+        <div class="hud-meta" id="round-text">ROUND 01 &nbsp;·&nbsp; THE ROOFTOP</div>
+        <div class="fighter right"><div class="name-row"><span>LAUIN</span><span id="boss-value">100</span></div><div class="health"><i id="boss-bar" style="width:100%"></i></div></div>
+      </div>
+      <div class="bottom-hud"><div class="hint">MOVE <b>WASD</b> &nbsp;·&nbsp; PUNCH <b>SPACE</b> &nbsp;·&nbsp; DODGE <b>SHIFT</b></div><div class="combo" id="combo">CLEAN HIT × 1</div></div>
+    </div>
+    <div class="mobile-controls" id="mobile-controls">
+      <div class="pad"><button class="touch-btn up" data-hold="up" aria-label="Move up">▲</button><button class="touch-btn left" data-hold="left" aria-label="Move left">◀</button><button class="touch-btn down" data-hold="down" aria-label="Move down">▼</button><button class="touch-btn right" data-hold="right" aria-label="Move right">▶</button></div>
+      <div class="action-buttons"><button class="touch-btn dodge" data-action="dodge" aria-label="Dodge">DODGE</button><button class="touch-btn punch" data-action="punch" aria-label="Punch">HIT!</button></div>
+    </div>
+    <div class="overlay" id="overlay"><div class="card"><div class="eyebrow" id="eyebrow">A ROOFTOP RIVALRY</div><h1 id="title">RONNY<br><em>VS LAUIN</em></h1><p id="message">Buzz cut sharp. Guard up. Take down Lauin and claim the rooftop.</p><div class="keyline">MOVE <b>WASD / ARROWS</b> &nbsp;·&nbsp; PUNCH <b>SPACE</b><br>DODGE <b>SHIFT</b> &nbsp;·&nbsp; MOBILE: USE ON-SCREEN BUTTONS</div><button class="primary" id="start">STEP INTO THE RING</button></div></div>
+  </section>
+  <footer class="footer"><span>THE ROOFTOP CIRCUIT <b>·</b> NIGHT SHIFT</span><span>Stay light on your feet, Ronny.</span></footer>
+</main>
+<script>
+(()=>{
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const overlay=document.getElementById('overlay'),startBtn=document.getElementById('start');
+const pbar=document.getElementById('player-bar'),bbar=document.getElementById('boss-bar'),pv=document.getElementById('player-value'),bv=document.getElementById('boss-value'),comboEl=document.getElementById('combo');
+const W=960,H=540,keys={},held={up:false,down:false,left:false,right:false};
+let running=false,ended=false,last=0,elapsed=0,shake=0,particles=[],rings=[],combo=0,comboTimer=0;
+const player={x:305,y:340,r:25,hp:100,max:100,face:0,speed:210,attack:0,cool:0,dodge:0,dodgeCd:0,inv:0,flash:0};
+const boss={x:655,y:270,r:30,hp:100,max:100,face:Math.PI,mode:'approach',timer:1.1,attack:0,flash:0,hitCd:0};
+function resize(){const dpr=Math.min(devicePixelRatio||1,2),rect=canvas.getBoundingClientRect();canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.max(1,Math.round(rect.height*dpr));ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0)}
+new ResizeObserver(resize).observe(canvas);resize();
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),angle=(a,b)=>Math.atan2(b.y-a.y,b.x-a.x);
+function start(){if(ended){reset()}running=true;overlay.classList.add('hidden');last=performance.now();requestAnimationFrame(loop)}
+function reset(){Object.assign(player,{x:305,y:340,hp:100,face:0,attack:0,cool:0,dodge:0,dodgeCd:0,inv:0,flash:0});Object.assign(boss,{x:655,y:270,hp:100,face:Math.PI,mode:'approach',timer:1.1,attack:0,flash:0,hitCd:0});particles=[];rings=[];elapsed=0;combo=0;ended=false;updateHud()}
+startBtn.addEventListener('click',start);
+window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Shift'].includes(e.key))e.preventDefault();keys[e.key.toLowerCase()]=true;if(!running&&e.key==='Enter')start();if(running&&(e.key===' '||e.key.toLowerCase()==='j'))punch();if(running&&(e.key==='Shift'||e.key.toLowerCase()==='k'))dodge()});
+window.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+document.querySelectorAll('[data-hold]').forEach(btn=>{const key=btn.dataset.hold;const on=e=>{e.preventDefault();held[key]=true;btn.classList.add('active')},off=e=>{e.preventDefault();held[key]=false;btn.classList.remove('active')};btn.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(ev=>btn.addEventListener(ev,off))});
+document.querySelectorAll('[data-action]').forEach(btn=>btn.addEventListener('pointerdown',e=>{e.preventDefault();if(!running)return;btn.classList.add('active');btn.dataset.action==='punch'?punch():dodge()}));
+document.querySelectorAll('[data-action]').forEach(btn=>btn.addEventListener('pointerup',()=>btn.classList.remove('active')));
+function punch(){if(player.cool>0||ended)return;player.attack=.24;player.cool=.39;const d=dist(player,boss),a=angle(player,boss),diff=Math.atan2(Math.sin(a-player.face),Math.cos(a-player.face));if(d<91&&Math.abs(diff)<1.2&&boss.hitCd<=0){boss.hp=Math.max(0,boss.hp-12);boss.flash=.16;boss.hitCd=.22;boss.x+=Math.cos(player.face)*18;boss.y+=Math.sin(player.face)*12;shake=5;combo++;comboTimer=1.35;spawnBurst(boss.x,boss.y-14,'#dcf476',9);if(combo>1){comboEl.textContent=`CLEAN HIT × ${combo}`;comboEl.classList.add('on')}if(boss.hp<=0)finish(true)}else{spawnBurst(player.x+Math.cos(player.face)*43,player.y-15,'#f3d9a1',3)}}
+function dodge(){if(player.dodgeCd>0||ended)return;player.dodge=.23;player.dodgeCd=.88;player.inv=.3;let dx=(keys.d||keys.arrowright||held.right?1:0)-(keys.a||keys.arrowleft||held.left?1:0),dy=(keys.s||keys.arrowdown||held.down?1:0)-(keys.w||keys.arrowup||held.up?1:0);if(!dx&&!dy){dx=Math.cos(player.face);dy=Math.sin(player.face)}const l=Math.hypot(dx,dy)||1;player.dodgeX=dx/l;player.dodgeY=dy/l;spawnBurst(player.x,player.y,'#b9d1c9',8)}
+function spawnBurst(x,y,color,n){for(let i=0;i<n;i++){let a=Math.random()*Math.PI*2,s=50+Math.random()*180;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-35,life:.25+Math.random()*.32,max:.55,color,size:2+Math.random()*3})}}
+function finish(win){ended=true;running=false;overlay.classList.remove('hidden');document.getElementById('eyebrow').textContent=win?'ROOFTOP CHAMPION':'BACK TO THE CORNER';document.getElementById('title').innerHTML=win?'<em>RONNY WINS</em><br>THE ROOFTOP':'LAUIN<br><em>TAKES THE ROUND</em>';document.getElementById('message').textContent=win?'Lauin is down. Ronny Seida owns the night. That buzz cut? Still immaculate.':'The rooftop is Lauin’s—for now. Catch your breath and come back swinging.';document.getElementById('start').textContent=win?'RUN IT BACK':'TRY AGAIN';document.querySelector('.keyline').innerHTML='MOVE <b>WASD / ARROWS</b> &nbsp;·&nbsp; PUNCH <b>SPACE</b><br>DODGE <b>SHIFT</b> &nbsp;·&nbsp; MOBILE: USE ON-SCREEN BUTTONS'}
+function updateHud(){pbar.style.width=player.hp+'%';bbar.style.width=boss.hp+'%';pv.textContent=Math.ceil(player.hp);bv.textContent=Math.ceil(boss.hp)}
+function update(dt){elapsed+=dt;player.cool=Math.max(0,player.cool-dt);player.attack=Math.max(0,player.attack-dt);player.dodgeCd=Math.max(0,player.dodgeCd-dt);player.dodge=Math.max(0,player.dodge-dt);player.inv=Math.max(0,player.inv-dt);player.flash=Math.max(0,player.flash-dt);boss.flash=Math.max(0,boss.flash-dt);boss.hitCd=Math.max(0,boss.hitCd-dt);comboTimer=Math.max(0,comboTimer-dt);if(comboTimer===0){combo=0;comboEl.classList.remove('on')}
+let dx=(keys.d||keys.arrowright||held.right?1:0)-(keys.a||keys.arrowleft||held.left?1:0),dy=(keys.s||keys.arrowdown||held.down?1:0)-(keys.w||keys.arrowup||held.up?1:0);if(dx||dy){let l=Math.hypot(dx,dy);dx/=l;dy/=l;if(player.dodge<=0){player.face=Math.atan2(dy,dx);player.x+=dx*player.speed*dt;player.y+=dy*player.speed*dt}}if(player.dodge>0){player.x+=player.dodgeX*player.speed*2.7*dt;player.y+=player.dodgeY*player.speed*2.7*dt}player.x=clamp(player.x,100,860);player.y=clamp(player.y,190,438);
+if(boss.mode==='approach'){let a=angle(boss,player),d=dist(boss,player);boss.face=a;if(d>88){boss.x+=Math.cos(a)*100*dt;boss.y+=Math.sin(a)*74*dt}else{boss.mode='windup';boss.timer=.7;boss.attack=0;}}
+else if(boss.mode==='windup'){boss.face=angle(boss,player);boss.timer-=dt;if(boss.timer<=0){boss.mode='charge';boss.timer=.35;boss.attack=.35;boss.hitPlayer=false;boss.chargeX=Math.cos(boss.face);boss.chargeY=Math.sin(boss.face)}}
+else if(boss.mode==='charge'){boss.x+=boss.chargeX*330*dt;boss.y+=boss.chargeY*235*dt;boss.timer-=dt;if(dist(boss,player)<53&&player.inv<=0&&!boss.hitPlayer){boss.hitPlayer=true;player.hp=Math.max(0,player.hp-18);player.flash=.2;player.x-=boss.chargeX*25;player.y-=boss.chargeY*18;shake=9;spawnBurst(player.x,player.y,'#ff7467',12);if(player.hp<=0)finish(false)}if(boss.timer<=0){boss.mode='recover';boss.timer=.72;boss.attack=0}}
+else{boss.timer-=dt;if(boss.timer<=0){boss.mode='approach';boss.timer=.5}}
+boss.x=clamp(boss.x,95,865);boss.y=clamp(boss.y,180,430);
+for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=220*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1)}shake=Math.max(0,shake-dt*20);updateHud()}
+function rr(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function drawArena(){
+ ctx.fillStyle='#283c40';ctx.fillRect(0,0,W,H);
+ // distant midnight skyline
+ let sky=ctx.createLinearGradient(0,0,0,270);sky.addColorStop(0,'#13242b');sky.addColorStop(1,'#365056');ctx.fillStyle=sky;ctx.fillRect(0,0,W,270);
+ ctx.fillStyle='#e3d69a';ctx.globalAlpha=.72;ctx.beginPath();ctx.arc(783,92,34,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+ for(let i=0;i<15;i++){let x=i*72-13,h=50+(i*37%83);ctx.fillStyle=i%3?'#1a2c32':'#22363b';ctx.fillRect(x,206-h,59,h+32);for(let wy=220-h;wy<220;wy+=15)for(let wx=x+9;wx<x+53;wx+=14){if((i*3+wy+wx)%4!==0){ctx.fillStyle='#829080';ctx.globalAlpha=.18;ctx.fillRect(wx,wy,5,7);ctx.globalAlpha=1}}}
+ // rooftop parapet, distant amber windows
+ ctx.fillStyle='#536764';ctx.fillRect(0,213,W,17);ctx.fillStyle='#829084';ctx.fillRect(0,213,W,3);ctx.fillStyle='#273a3d';for(let x=14;x<W;x+=77){ctx.fillRect(x,204,44,10);ctx.fillStyle='#ac9b6b';ctx.globalAlpha=.38;ctx.fillRect(x+4,207,4,3);ctx.globalAlpha=1;ctx.fillStyle='#273a3d'}
+ let floor=ctx.createLinearGradient(0,230,0,H);floor.addColorStop(0,'#435a54');floor.addColorStop(1,'#202e30');ctx.fillStyle=floor;ctx.fillRect(0,230,W,H-230);
+ // perspective tile lines
+ ctx.strokeStyle='#c2d2ae';ctx.globalAlpha=.1;ctx.lineWidth=1;for(let i=0;i<10;i++){let y=236+i*i*3.2;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}for(let i=-6;i<14;i++){ctx.beginPath();ctx.moveTo(480+(i-4)*16,230);ctx.lineTo(480+i*145,540);ctx.stroke()}ctx.globalAlpha=1;
+ // chalk ring markings
+ ctx.strokeStyle='#d5dfbf';ctx.globalAlpha=.19;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(480,359,326,112,0,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.ellipse(480,359,235,77,0,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;
+ // perimeter lamps and beams
+ for(const x of [154,806]){ctx.globalAlpha=.11;ctx.fillStyle='#f0dfa4';ctx.beginPath();ctx.moveTo(x-25,46);ctx.lineTo(x+25,46);ctx.lineTo(x+176,365);ctx.lineTo(x-176,365);ctx.closePath();ctx.fill();ctx.globalAlpha=1;ctx.fillStyle='#e8dfb2';ctx.beginPath();ctx.arc(x,44,4,0,Math.PI*2);ctx.fill()}
+ // decorative rooftop corner stripes
+ ctx.fillStyle='#d8f36a';ctx.globalAlpha=.68;ctx.fillRect(35,458,90,3);ctx.fillRect(835,458,90,3);ctx.globalAlpha=1;
+}
+function drawFighter(f,isRonny){
+ ctx.save();ctx.translate(f.x,f.y);if(Math.cos(f.face)<0)ctx.scale(-1,1);let isPlayer=isRonny,flash=f.flash>0;
+ // shadow
+ ctx.fillStyle='#10191b88';ctx.beginPath();ctx.ellipse(-1,4,37,12,0,0,Math.PI*2);ctx.fill();
+ // ready glow / charge telegraph
+ if(!isPlayer&&boss.mode==='windup'){ctx.globalAlpha=.12+.08*Math.sin(elapsed*18);ctx.fillStyle='#ff655b';ctx.beginPath();ctx.moveTo(12,0);ctx.arc(0,0,170,-.56,.56);ctx.closePath();ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle='#ff7968';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(25,0);ctx.lineTo(136,0);ctx.stroke()}
+ if(!isPlayer&&boss.mode==='recover'){ctx.globalAlpha=.65;ctx.fillStyle='#d8f36a';ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.fillText('OPEN!',0,-53);ctx.globalAlpha=1}
+ // legs
+ ctx.strokeStyle=isPlayer?'#24353a':'#20252a';ctx.lineWidth=11;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-7,-8);ctx.lineTo(-12,10);ctx.moveTo(8,-7);ctx.lineTo(15,9);ctx.stroke();
+ rr(-23,6,20,9,4,'#151f22');rr(8,6,22,9,4,'#151f22');
+ // torso
+ let shirt=isPlayer?'#e7e5d4':'#24272d';if(flash)shirt='#ffffff';rr(-17,-34,36,32,10,shirt);
+ if(isPlayer){ctx.fillStyle='#8caa60';ctx.fillRect(-2,-30,6,21);ctx.fillStyle='#d8f36a';ctx.fillRect(-1,-30,3,14)}else{ctx.fillStyle='#a64043';ctx.beginPath();ctx.moveTo(-15,-29);ctx.lineTo(0,-23);ctx.lineTo(15,-31);ctx.lineTo(15,-24);ctx.lineTo(0,-17);ctx.lineTo(-15,-23);ctx.closePath();ctx.fill()}
+ // arms and gloves; leading arm punches forward
+ ctx.strokeStyle=isPlayer?'#d8ad88':'#aa705b';ctx.lineWidth=9;ctx.beginPath();ctx.moveTo(-12,-27);ctx.lineTo(-22,-12);ctx.lineTo(-28,-9);ctx.stroke();ctx.beginPath();ctx.moveTo(12,-27);ctx.lineTo(20,-19);ctx.lineTo(f.attack>0?47:28,-18);ctx.stroke();
+ ctx.fillStyle=isPlayer?'#d8f36a':'#fa695b';ctx.beginPath();ctx.arc(f.attack>0?49:29,-19,8,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff7';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(f.attack>0?49:29,-19,5,.3,2.4);ctx.stroke();
+ // neck, face, ears
+ ctx.fillStyle='#bc8c6b';ctx.fillRect(-5,-43,11,12);ctx.fillStyle=flash?'#fff':isPlayer?'#d4a47f':'#a8755f';ctx.beginPath();ctx.ellipse(2,-51,15,17,0,0,Math.PI*2);ctx.fill();
+ // hair: close buzz for Ronny, tousled hair for Lauin
+ if(isPlayer){ctx.fillStyle='#342c29';ctx.beginPath();ctx.ellipse(1,-62,14,7,0,Math.PI,Math.PI*2);ctx.fill();ctx.fillStyle='#78624e';for(let i=-8;i<=9;i+=4){ctx.beginPath();ctx.arc(i,-65+(Math.abs(i)%3),1.25,0,Math.PI*2);ctx.fill()}}
+ else{ctx.fillStyle='#24232a';ctx.beginPath();ctx.moveTo(-12,-57);ctx.lineTo(-16,-71);ctx.lineTo(-7,-65);ctx.lineTo(-3,-75);ctx.lineTo(2,-65);ctx.lineTo(11,-71);ctx.lineTo(14,-56);ctx.closePath();ctx.fill()}
+ // face features
+ ctx.fillStyle='#302c2a';ctx.beginPath();ctx.arc(7,-53,1.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#594239';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(5,-45);ctx.lineTo(10,-45);ctx.stroke();
+ // headband on Lauin
+ if(!isPlayer){ctx.strokeStyle='#e45650';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-11,-60);ctx.quadraticCurveTo(0,-65,13,-59);ctx.stroke()}
+ ctx.restore();
+}
+function draw(){ctx.save();if(shake>0)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);drawArena();
+ // glow beneath combatants
+ for(const f of [player,boss]){ctx.globalAlpha=.14;ctx.fillStyle=f===player?'#d8f36a':'#ff6258';ctx.beginPath();ctx.ellipse(f.x,f.y+3,45,17,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+ // draw back fighter first by y position
+ if(player.y<boss.y){drawFighter(player,true);drawFighter(boss,false)}else{drawFighter(boss,false);drawFighter(player,true)}
+ for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
+ // dodge trail and attack swoosh
+ if(player.inv>0){ctx.globalAlpha=.26;ctx.fillStyle='#e9f4d0';ctx.beginPath();ctx.arc(player.x,player.y-28,34,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+ if(player.attack>0){ctx.strokeStyle='#e8f687';ctx.lineWidth=6;ctx.globalAlpha=player.attack/.24;ctx.beginPath();ctx.arc(player.x+Math.cos(player.face)*28,player.y-30,31,player.face-.75,player.face+.75);ctx.stroke();ctx.globalAlpha=1}
+ // scene vignette
+ let v=ctx.createRadialGradient(480,290,170,480,290,610);v.addColorStop(0,'#0000');v.addColorStop(1,'#07101377');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);ctx.restore();
+}
+function loop(now){if(!running)return;let dt=Math.min(.033,(now-last)/1000);last=now;update(dt);draw();if(running)requestAnimationFrame(loop)}
+draw();
+})();
+</script>
+</body>
+</html>
